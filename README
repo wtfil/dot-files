@@ -1,5 +1,5 @@
 cd home
-#install to install setup vim
+#to setup vim
 sudo make vim
 #to setup screen
 sudo make screen
