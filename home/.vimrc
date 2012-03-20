@@ -20,17 +20,24 @@ set number
 set so=7
 " usefull keys
 map <c-o> i<CR><ESC>k$l
+map  <c-p> o<ESC>p
+"map <c-j> ddp
+"map <c-k> ddkP
 imap <c-o> <ESC>o
 imap <c-e> (ctx){},<ESC>hi<CR><ESC>k$o<tab>
 imap <c-f> <Space>()<Space>{}<ESC>i<CR><ESC>k$o<tab>
-map  <c-p> o<ESC>p
 imap <c-l> <ESC>lli
+"imap <c-h> <ESC>i
+imap <c-j> <ESC>ja
+imap <c-k> <ESC>ka
 imap <c-w> <ESC>lwi
 imap <c-W> <ESC>lWi
 imap <c-b> <ESC>lbi
 imap <c-B> <ESC>lBi
 imap <c-u> <ESC>uli
 imap <c-c><c-w> <ESC>lcw
+cmap ww w<CR>
+imap jj <ESC>l
 ia try try<space>{}<ESC>i<CR><CR><ESC>$a<space>catch<space>(e)<space>{};<ESC>ki<space><space> 
 " comments C-c
 au BufRead,BufNewFile * if &ft=='javascript' | map <C-c> mn^i//<ESC>`n2l | endif

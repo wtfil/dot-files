@@ -1,6 +1,7 @@
 SCREEN="auto-screen.sh"
 all: screen vim
 screen:
+	apt-get install screen
 	cp $(SCREEN) ~/
 	chmod +x ~/$(SCREEN)
 	echo ~/$(SCREEN) >> ~/.bashrc
@@ -9,6 +10,7 @@ screen:
 	echo "multiuser on" >> ~/.screenrc
 	echo "acladd $(SUDO_USER)" >> ~/.screenrc
 vim:
+	apt-get install vim
 	cp .vimrc ~/
 	mkdir -p ~/.vim
 	mkdir -p ~/.vim/tmp/
