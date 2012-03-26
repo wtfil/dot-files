@@ -9,6 +9,9 @@ screen:
 	chmod 755 /var/run/screen
 	echo "multiuser on" >> ~/.screenrc
 	echo "acladd $(SUDO_USER)" >> ~/.screenrc
+	echo "termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'" >> ~/.screenrc
+	chmod 775 ~/.screenrc
+	chown $(SUDO_USER) ~/.screenrc
 vim:
 	apt-get install vim
 	cp .vimrc ~/
