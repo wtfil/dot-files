@@ -4,7 +4,7 @@ if [ "$TERM" = "screen" ]; then
   exit 0;
 fi;
 if [ `screen -ls | grep $NAME` -z ]; then
-  screen -S $NAME;
+  screen -e ^Pp -S $NAME;
 else
-  screen -x $USER/$NAME;
+  screen -e ^Pp -x $USER/$NAME;
 fi;
