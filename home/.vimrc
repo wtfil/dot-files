@@ -18,16 +18,50 @@ set wildmode=longest:full
 set wildmenu
 set number
 set so=7
+" reload vimrc
+map <F5> :so ~/.vimrc<cr>
 " usefull keys
+map <space> i<space><esc>l
+map <c-h> hdl
 map <c-o> i<CR><ESC>k$l
 map  <c-p> o<ESC>p
-"map <c-j> ddp
-"map <c-k> ddkP
 imap <c-o> <ESC>o
-imap <c-e> (ctx){},<ESC>hi<CR><ESC>k$o<tab>
-imap <c-f> <Space>()<Space>{}<ESC>i<CR><ESC>k$o<tab>
-imap <c-l> <ESC>lli
+imap <c-f> <space>()<esc>i
+" making () and {}
+" imap <c-e> <esc>$a<space>{}<esc>i<cr><esc>ko<tab>
+" imap <c-E> <esc>$a<space>{},<esc>hi<cr><esc>ko<tab>
+" imap <c-r> <esc>$a<space>{}.bind(this)<esc>11hi<cr><esc>ko<tab>
+" imap <c-R> <esc>$a<space>{}.bind(this),<esc>12hi<cr><esc>ko<tab>
+function! Brackets(addition)
+  let ln = line(".")
+  let cn = col(".")
+  let fullLine =  getline(ln)
+  let before = strpart(fullLine, 0, cn)
+  let after = strpart(fullLine, cn, 999)
+  if &ft == 'javascript'
+    let operators2way = '\(if\|function\|for\|while\)'
+    let operators1way = '\(else\|return\|=\)'
+    if before =~ operators2way.'[ ]*$'
+      exe "normal" "a ()\<esc>h"
+    elseif before =~ operators2way.' ('
+      if a:addition
+        exe "normal" "t)la {}.bind(this)\<esc>11hi\<cr>\<esc>O\<tab>"
+      else 
+        exe "normal" "t)la {}\<esc>i\<cr>\<esc>O\<tab>"
+      endif
+    elseif before =~ operators1way
+      exe "normal" "a {}\<esc>i\<cr>\<esc>O\<tab>"
+    endif
+  elseif &ft == 'css'
+    exe "normal" "o{}\<esc>i\<cr>\<esc>O"
+  endif
+endfunction
+map <c-f> <ESC>:call Brackets(0)<cr>
+imap <c-f> <ESC>:call Brackets(0)<cr>a
+imap <c-e> <ESC>:call Brackets(1)<cr>a
+" maping contorlls in insert mode
 "imap <c-h> <ESC>i
+imap <c-l> <ESC>lli
 imap <c-j> <ESC>ja
 imap <c-k> <ESC>ka
 imap <c-w> <ESC>lwi
@@ -37,28 +71,64 @@ imap <c-B> <ESC>lBi
 imap <c-u> <ESC>uli
 imap <c-c><c-w> <ESC>lcw
 cmap ww w<CR>
-imap jj <ESC>l
 ia try try<space>{}<ESC>i<CR><CR><ESC>$a<space>catch<space>(e)<space>{};<ESC>ki<space><space> 
-" comments C-c
-au BufRead,BufNewFile * if &ft=='javascript' | map <C-c> mn^i//<ESC>`n2l | endif
-"au BufRead,BufNewFile * if &ft=='javascript' | map 1<C-c> mn^i//<ESC>`n2l | endif
-au BufRead,BufNewFile * if &ft=='css' | map <C-c> mn^i/*<ESC>$a*/<ESC>`nl | endif
-for i in range(2,99)
-  exec "au BufRead,BufNewFile * if &ft=='javascript' | map ".i."<C-c> mn^<C-v>".(i-1)."jI//<ESC>`n2l | endif"
-  exec "au BufRead,BufNewFile * if &ft=='css' | map ".i."<C-c> mn^<C-v>".(i-1)."jI/*<ESC>`nv".(i-1)."j:s/$/*\\/<CR>`n | endif"
-endfor
-" uncomment C-e
-map <C-e> mn^<C-v>ld`n2h
-"map 1<C-e> mn^<C-v>ld`n2h
-for i in range(2,99)
-  exec "au BufRead,BufNewFile * if &ft=='javascript' | map ".i."<C-e> mn^<C-v>".(i-1)."jld`n2h | endif"
-  exec "au BufRead,BufNewFile * if &ft=='css' | map ".i."<C-e> mnv".(i-1)."j:s/\\/\\*//<CR>`nv".(i-1)."j:s/\*\\//<CR>`n2h | endif"
-endfor
+" comments
+function! ToggleComments(start, end)
+  let ft = &filetype
+  let start = getline(a:start)
+  if ft == 'javascript' || ft == 'css' || ft == 'php'
+    if start =~ '\/\*'
+      " removing /* */
+      exe a:start 's/\/\*[ ]*//'
+      exe a:end 's/[ ]*\*\///'
+    else
+      " adding /* */
+      exe a:start 's/[^ ]/\/* \0/'
+      exe a:end 's/$/ *\//'
+    endif
+  endif
+  if ft == 'html'
+    if start =~ '<\!\-\-'
+      " removing <!-- -->
+      exe a:start 's/<\!\-\-[ ]*//'
+      exe a:end 's/[ ]*\-\->//'
+    else
+      " adding <!-- -->
+      exe a:start 's/[^ ]/<!-- \0/'
+      exe a:end 's/$/ -->/'
+    endif
+  endif
+endfunction
+command! -range ToggleComments call ToggleComments(<line1>, <line2>)
+vmap <c-c> :ToggleComments<cr>
+map <c-c> :ToggleComments<cr>
 
-"backup and swap
+" OnlineDoc
+function! OnlineDoc()
+  if &ft =~ "cpp"
+    let s:urlTemplate = "http://doc.trolltech.com/4.1/%.html"
+  elseif &ft =~ "ruby"
+    let s:urlTemplate = "http://www.ruby-doc.org/core/classes/%.html"
+  elseif &ft =~ "perl"
+    let s:urlTemplate = "http://perldoc.perl.org/functions/%.html"
+  elseif &ft =~ "javascript"
+    let s:urlTemplate = "https://developer.mozilla.org/en-US/search?q=%"
+  else
+    return
+  endif
+  let s:browser = "\"D:\\Applications\\Mozilla Firefox\\firefox.exe\""
+  let s:wordUnderCursor = expand("<cword>")
+  let s:url = substitute(s:urlTemplate, "%", s:wordUnderCursor, "g")
+  let s:cmd = "silent !start " . s:browser . " " . s:url
+  execute s:cmd
+endfunction
+map <silent> <F2> :call OnlineDoc()<CR>
+
+" backup and swap
 set backupdir=~/.vim/tmp/backup
 set backup
 set directory=~/.vim/tmp/swap
+
 " bind russian keyboard
 map ё `
 map й q
