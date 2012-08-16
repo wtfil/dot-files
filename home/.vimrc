@@ -16,7 +16,6 @@ set laststatus=2
 set nowrap
 set wildmode=longest:full
 set wildmenu
-set number
 set so=7
 " reload vimrc
 map <F5> :so ~/.vimrc<cr>
@@ -28,10 +27,6 @@ map  <c-p> o<ESC>p
 imap <c-o> <ESC>o
 imap <c-f> <space>()<esc>i
 " making () and {}
-" imap <c-e> <esc>$a<space>{}<esc>i<cr><esc>ko<tab>
-" imap <c-E> <esc>$a<space>{},<esc>hi<cr><esc>ko<tab>
-" imap <c-r> <esc>$a<space>{}.bind(this)<esc>11hi<cr><esc>ko<tab>
-" imap <c-R> <esc>$a<space>{}.bind(this),<esc>12hi<cr><esc>ko<tab>
 function! Brackets(addition)
   let ln = line(".")
   let cn = col(".")
@@ -40,35 +35,47 @@ function! Brackets(addition)
   let after = strpart(fullLine, cn, 999)
   if &ft == 'javascript'
     let operators2way = '\(if\|function\|for\|while\)'
-    let operators1way = '\(else\|return\|=\)'
+    let operators1way = '\(else\|return\|=\|,\|:\|)\)'
     if before =~ operators2way.'[ ]*$'
-      exe "normal" "a ()\<esc>h"
+      let command = "a ()\<esc>h"
     elseif before =~ operators2way.' ('
       if a:addition
-        exe "normal" "t)la {}.bind(this)\<esc>11hi\<cr>\<esc>O\<tab>"
+        let command = "t)la {}.bind(this)\<esc>11hi\<cr>\<esc>O\<tab>"
       else 
-        exe "normal" "t)la {}\<esc>i\<cr>\<esc>O\<tab>"
+        let command = "t)la {}\<esc>i\<cr>\<esc>O\<tab>"
       endif
-    elseif before =~ operators1way
-      exe "normal" "a {}\<esc>i\<cr>\<esc>O\<tab>"
+    elseif before =~ operators1way.'[ ]*$'
+      let command = "a {}\<esc>i\<cr>\<esc>O\<tab>"
+    else
+      let command = "a()\<esc>i"
     endif
   elseif &ft == 'css'
-    exe "normal" "o{}\<esc>i\<cr>\<esc>O"
+    let command = "o{}\<esc>i\<cr>\<esc>O"
   endif
+  exe "normal" command
 endfunction
-map <c-f> <ESC>:call Brackets(0)<cr>
+"map <c-f> <ESC>:call Brackets(0)<cr>
 imap <c-f> <ESC>:call Brackets(0)<cr>a
 imap <c-e> <ESC>:call Brackets(1)<cr>a
 " maping contorlls in insert mode
-"imap <c-h> <ESC>i
-imap <c-l> <ESC>lli
+noremap   <Up>     <NOP>
+noremap   <Down>   <NOP>
+noremap   <Left>   <NOP>
+noremap   <Right>  <NOP>
+imap <c-v> <ESC>lv
+imap <c-u> <ESC>
+imap <c-c> <ESC>lc
+imap <c-d> <ESC>cl
+imap <c-s-o> <ESC>O
+imap <c-p> <ESC>pi
+imap <c-h> <Left>
+imap <c-l> <Right>
 imap <c-j> <ESC>ja
 imap <c-k> <ESC>ka
 imap <c-w> <ESC>lwi
-imap <c-W> <ESC>lWi
 imap <c-b> <ESC>lbi
-imap <c-B> <ESC>lBi
 imap <c-u> <ESC>uli
+imap <c-r> <ESC>$i
 imap <c-c><c-w> <ESC>lcw
 cmap ww w<CR>
 ia try try<space>{}<ESC>i<CR><CR><ESC>$a<space>catch<space>(e)<space>{};<ESC>ki<space><space> 
@@ -222,6 +229,6 @@ else
   hi PmenuSel ctermbg=246
   hi Pmenu ctermfg=255 ctermbg=92
 endif
-map <c-T> <ESC>bmnde:r ! ~/.vim/translate en ru <C-R>=escape(@", '/\')<CR><CR>^d$`nhpmnjdd`n
-imap <c-T> <ESC>bmnde:r ! ~/.vim/translate en ru <C-R>=escape(@", '/\')<CR><CR>^d$`npmnjdd`ni
+"map <c-T> <ESC>bmnde:r ! ~/.vim/translate en ru <C-R>=escape(@", '/\')<CR><CR>^d$`nhpmnjdd`n
+"imap <c-T> <ESC>bmnde:r ! ~/.vim/translate en ru <C-R>=escape(@", '/\')<CR><CR>^d$`npmnjdd`ni
 "map <c-Е> <ESC>bmnde:r ! ~/translate ru en <C-R>=escape(@", '/\')<CR><CR>^d$`nhp
