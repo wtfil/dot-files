@@ -1,6 +1,6 @@
 #!/bin/bash
 NAME="$USER"vim;
-if [ "$TERM" = "screen" ]; then
+if [[ $TERM = screen* ]]; then
   exit 0;
 fi;
 if [ `screen -ls | grep $NAME` -z ]; then
