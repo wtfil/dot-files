@@ -2,9 +2,9 @@
 DIR=~/ubuntu-env
 git clone git@github.com:wtfil/ubuntu-env.git $DIR && cd $DIR
 if hash apt-get 2>/dev/null; then
-    apt-get install screen
-    chmod +s /usr/bin/screen
-    chmod 755 /var/run/screen
+    sudo apt-get install screen
+    sudo chmod +s /usr/bin/screen
+    sudo chmod 755 /var/run/screen
     cat .auto-screen.sh >> ~/.bashrc
     echo ok;
 else
