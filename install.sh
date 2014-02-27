@@ -7,7 +7,7 @@ if hash apt-get 2>/dev/null; then
     sudo chmod +s /usr/bin/screen
     sudo chmod 755 /var/run/screen
     if [ -z `grep '#autoload screen' $PROFILE` ]; then
-        cat '#autoload screen' >> $PROFILE
+        echo '#autoload screen' >> $PROFILE
         cat $DIR/.auto-screen.sh >> $PROFILE
     fi;
     cp $DIR/.screenrc ~
