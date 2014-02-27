@@ -1,4 +1,6 @@
 #!/bin/bash
+DIR=~/ubuntu-env
+git clone git@github.com:wtfil/ubuntu-env.git $DIR && cd $DIR
 if hash apt-get 2>/dev/null; then
     apt-get install screen
     chmod +s /usr/bin/screen
