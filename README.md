@@ -1,1 +1,4 @@
-git clone git@github.com:wtfil/ubuntu-env.git
+Install
+---------------
+
+    wget -q "https://raw.github.com/wtfil/ubuntu-env/master/install.sh" -O -  | sudo bash
