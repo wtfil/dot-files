@@ -13,8 +13,8 @@ else
 fi;
 
 cp $DIR/.bashrc ~
-ln -s $PROFILE ~/.profile
-ln -s $PROFILE ~/.bash_login
+ln -sf $PROFILE ~/.profile
+ln -sf $PROFILE ~/.bash_login
 cp $DIR/.git-completion.bash ~
 cp $DIR/.bash_aliases ~
 cp $DIR/.vimrc ~
