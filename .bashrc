@@ -22,7 +22,7 @@ function proml {
     if [ $IS_MAC ]; then
         PS1="\w$LIGHT_BLUE\$(parse_git_branch)$DEFAULT> "
     else
-        PS1="\h:\w$LIGHT_BLUE\$(parse_git_branch)$DEFAULT> "
+        PS1="$LIGHT_GREEN\h$DEFAULT:\w$LIGHT_BLUE\$(parse_git_branch)$DEFAULT> "
     fi
 }
 proml
