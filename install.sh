@@ -9,7 +9,7 @@ if hash apt-get 2>/dev/null; then
     sudo chmod 755 /var/run/screen
     cp $DIR/.screenrc ~
 else
-    echo 'apt-get in not find; screen is not instaled';
+    echo 'apt-get is not find; screen is not instaled';
 fi;
 
 cp $DIR/.bashrc ~
