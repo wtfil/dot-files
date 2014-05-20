@@ -37,7 +37,7 @@ fi
 
 if [ -z $IS_MAC ]; then
     SCREEN_NAME="$USER"vim;
-    if [[ $TERM != screen* ]]; then
+    if [ $TERM != dumb ] && [ $TERM != screen* ]; then
         if [ `screen -ls | grep $SCREEN_NAME` -z ]; then
             screen -S $SCREEN_NAME;
         else
