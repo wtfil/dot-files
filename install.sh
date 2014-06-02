@@ -16,6 +16,7 @@ cp $DIR/.bashrc ~
 ln -sf $PROFILE ~/.profile
 ln -sf $PROFILE ~/.bash_login
 cp $DIR/.git-completion.bash ~
+cp $DIR/.gitconfig ~
 cp $DIR/.bash_aliases ~
 cp $DIR/.vimrc ~
 cp -r $DIR/.vim ~

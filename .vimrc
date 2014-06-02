@@ -47,7 +47,7 @@ map <Leader>q :1,100bd<CR>
 
 " auto creating file
 command! -nargs=* E call MkdirP(<f-args>)
-function MkdirP(file)
+function! MkdirP(file)
     call system('echo  '.a:file.' | sed -E "s/(.*)\/([^\/]+)/\1/" | xargs mkdir -p')
     execute ":e ".a:file
 endfunction
@@ -175,6 +175,9 @@ Bundle 'git://git.wincent.com/command-t.git'
 Bundle 'https://github.com/jeetsukumaran/vim-buffergator.git'
 filetype plugin indent on
 
+" intents
+Bundle 'https://github.com/pangloss/vim-javascript.git'
+
 " syntastic
 Bundle 'scrooloose/syntastic'
 let g:syntastic_always_populate_loc_list=1
@@ -195,13 +198,6 @@ map <Leader>r :NERDTreeClose<CR>
 Bundle 'https://github.com/terryma/vim-expand-region.git'
 map K <Plug>(expand_region_expand)
 map L <Plug>(expand_region_shrink)
-
-" jscomplete
-Bundle 'https://github.com/teramako/jscomplete-vim.git'
-Bundle 'https://github.com/Shougo/neocomplcache.vim.git'
-autocmd FileType javascript
-  \ :setl omnifunc=jscomplete#CompleteJS
-let g:jscomplete_use = ['dom', 'moz']
 
 " css syntax
 Bundle 'https://github.com/groenewege/vim-less.git'
