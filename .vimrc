@@ -9,6 +9,7 @@ Plugin 'snipMate'
 Plugin 'wincent/Command-T'
 Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'Lokaltog/vim-powerline'
+Plugin 'jelera/vim-javascript-syntax'
 
 " syntastic
 Plugin 'scrooloose/syntastic'
@@ -17,8 +18,12 @@ let g:syntastic_javascript_checkers = ['jsxhint']
 map <Leader>n :lnext<CR>
 
 " color schemas
+"Plugin 'ColorSamplerPack'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'wesgibbs/vim-irblack'
+Plugin 'goatslacker/mango.vim'
+Plugin 'Lokaltog/vim-distinguished'
+Plugin 'nanotech/jellybeans.vim'
 
 " fuzzy finder
 " TODO fix fuzzy finder
@@ -66,7 +71,9 @@ set directory=~/.vim/tmp/swap
 
 " hightlight
 syntax enable
+syntax on
 set background=dark
+set t_Co=256
 set term=screen-256color
 let g:solarized_termcolors=256
 colorscheme solarized
