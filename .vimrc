@@ -10,6 +10,7 @@ Plugin 'wincent/Command-T'
 Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'jelera/vim-javascript-syntax'
+Plugin 'pangloss/vim-javascript'
 
 " syntastic
 Plugin 'scrooloose/syntastic'
