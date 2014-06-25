@@ -2,3 +2,5 @@
 	name = wtfil
 [color]
 	ui = auto
+[alias]
+	ff = diff --cached
