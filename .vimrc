@@ -11,6 +11,7 @@ Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
+Plugin 'mattn/emmet-vim'
 
 " syntastic
 Plugin 'scrooloose/syntastic'
