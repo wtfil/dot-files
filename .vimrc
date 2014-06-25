@@ -35,8 +35,9 @@ Plugin 'nanotech/jellybeans.vim'
 
 " nerd tree
 Plugin 'scrooloose/nerdtree'
-map <Leader>t :NERDTreeFocus<CR>
-map <Leader>r :NERDTreeClose<CR>
+"map <Leader>t :NERDTreeFocus<CR>
+"map <Leader>r :NERDTreeClose<CR>
+map <Leader>t :NERDTreeToggle<CR>   
 
 " expand-region
 Plugin 'terryma/vim-expand-region'
