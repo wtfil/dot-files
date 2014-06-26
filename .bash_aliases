@@ -1,7 +1,9 @@
-function mcd() {
+function mcd {
     mkdir -p "$1" && cd "$1";
 }
-alias gr='grep -snr --color=always'
+function gr {
+    grep -nr --color=always $1 . 2>/dev/null | grep -vEe '.git|node_modules'
+}
 alias egr='egrep -snr --color=always'
 alias ll='ls -halF'
 alias ss='du -sh'
