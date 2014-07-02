@@ -27,11 +27,11 @@ Plugin 'goatslacker/mango.vim'
 Plugin 'Lokaltog/vim-distinguished'
 Plugin 'nanotech/jellybeans.vim'
 
-" fuzzy finder
-" TODO fix fuzzy finder
-"Plugin 'FuzzyFinder'
-"map <Leader>e :FufCoverageFile<CR>
-"let g:fuf_coveragefile_exclude = '\v\~$|debian|lego|node_modules|18n|examples|\.(o|png|wiki|xml|exe|dll|bak|orig|swp)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
+" fuzzy finder                                                                                                                                                                                                     
+Plugin 'L9'                                                                                                                                                                                                        
+Plugin 'FuzzyFinder'                                                                                                                                                                                               
+map <Leader>e :FufCoverageFile<CR>                                                                                                                                                                                 
+let g:fuf_coveragefile_exclude = '\v\~$|production|debian|lego|node_modules|18n|examples|\.(o|png|wiki|xml|exe|dll|bak|orig|swp)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])' 
 
 " nerd tree
 Plugin 'scrooloose/nerdtree'
