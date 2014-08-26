@@ -20,6 +20,7 @@ cp $DIR/.gitconfig ~
 cp $DIR/.bash_aliases ~
 cp $DIR/.vimrc ~
 cp -r $DIR/.vim ~
+cp $DIR/.mongorc.js ~
 
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
