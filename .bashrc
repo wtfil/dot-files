@@ -1,11 +1,16 @@
 IS_MAC=
 
-if [[ `env | grep Apple` ]]; then
+if [ $TERM=='cigwin' ] || [[ `env | grep Apple` ]]; then
     IS_MAC=true
 fi
 
 function parse_git_branch {                                                                                                                                                                                        
-    git rev-parse --abbrev-ref HEAD 2>/dev/null                                                                                                                                                                    
+    local REV=`git rev-parse --abbrev-ref HEAD 2>/dev/null`
+    if [[ $REV ]]; then
+        echo " $REV ";
+    else
+        echo " ";
+    fi
 }                                                                                                                                                                                                                  
 function proml {                                                                                                                                                                                                   
     local BLUE="\[\033[0;34m\]"                                                                                                                                                                                    
@@ -20,10 +25,9 @@ function proml {
     # END OPTIONAL                                                                                                                                                                                                 
     local DEFAULT="\[\033[0m\]"                                                                                                                                                                                    
     if [ $IS_MAC ]; then                                                                                                                                                                                           
-        PS1="\w$LIGHT_BLUE \$(parse_git_branch) $DEFAULT> "                                                                                                                                                        
+        PS1="\w$LIGHT_BLUE\$(parse_git_branch)$DEFAULT> "
     else                                                                                                                                                                                                           
-        PS1="$LIGHT_GREEN\h$DEFAULT:\w$LIGHT_BLUE \$(parse_git_branch) $DEFAULT> "                                                                                                                                 
-    fi                                                                                                                                                                                                             
+        PS1="$LIGHT_GREEN\h$DEFAULT:\w$LIGHT_BLUE\$(parse_git_branch)$DEFAULT> "
 } 
 proml
 
