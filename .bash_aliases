@@ -7,7 +7,11 @@ function gr {
 function remote {                                                                                                                                                                                                  
     BRANCH=`git rev-parse --abbrev-ref HEAD 2>/dev/null`                                                                                                                                                           
     REMOTE=`git config --get remote.origin.url | sed -e 's/\:/\//' -e 's/git@//' -e 's/.git//' -e 's/https:\/\///'`                                                                                                
-    open https://$REMOTE/tree/$BRANCH                                                                                                                                                                              
+    if [ $TERM=='cigwin' ]; then
+        explorer https://$REMOTE/tree/$BRANCH
+    else
+        open https://$REMOTE/tree/$BRANCH
+    fi
 }
 alias egr='egrep -snr --color=always'
 alias ll='ls -halF'
