@@ -28,6 +28,7 @@ function proml {
         PS1="\w$LIGHT_BLUE\$(parse_git_branch)$DEFAULT> "
     else                                                                                                                                                                                                           
         PS1="$LIGHT_GREEN\h$DEFAULT:\w$LIGHT_BLUE\$(parse_git_branch)$DEFAULT> "
+    fi
 } 
 proml
 
