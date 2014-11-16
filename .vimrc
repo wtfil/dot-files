@@ -66,6 +66,11 @@ set wildmode=longest:full
 set wildmenu
 set so=7
 set backspace=indent,eol,start
+set guioptions=egt
+if has("gui_running")
+  map  <silent>  <S-Insert>  "+p
+  imap <silent>  <S-Insert>  <Esc>"+pa
+endif
 
 " backup and swap
 set backupdir=~/.vim/tmp/backup
