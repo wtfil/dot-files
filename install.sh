@@ -1,8 +1,8 @@
 #!/bin/bash
-DIR=~/ubuntu-env
+DIR=~/dot-files
 PROFILE=~/.bashrc
 
-git clone git@github.com:wtfil/ubuntu-env.git $DIR
+git clone git@github.com:wtfil/dot-files.git $DIR
 if hash apt-get 2>/dev/null; then
     sudo apt-get install screen
     sudo chmod +s /usr/bin/screen
