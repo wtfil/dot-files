@@ -1,4 +1,4 @@
 Install
 ---------------
 
-    wget -q "https://raw.github.com/wtfil/ubuntu-env/master/install.sh" -O -  | bash
+    wget -q "https://raw.githubusercontent.com/wtfil/dot-files/master/install.sh" -O - | bash
