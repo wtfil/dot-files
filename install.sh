@@ -26,6 +26,7 @@ cp $DIR/.mongorc.js ~
 if [ $TERM=='cigwin' ]; then
     mkdir -p ~/AppData/Roaming/Console/
     cp $DIR/console.xml ~/AppData/Roaming/Console/
+    cp $DIR/ConEmu.xml ~/AppData/Roaming/
 fi
 
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
