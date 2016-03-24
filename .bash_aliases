@@ -16,3 +16,4 @@ function remote {
 alias egr='egrep -snr --color=always'
 alias ll='ls -halF'
 alias ss='du -sh'
+alias usage='ls | xargs -I{}  du -hs {}'
