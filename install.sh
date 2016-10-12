@@ -2,7 +2,6 @@
 DIR=~/dot-files
 PROFILE=~/.bashrc
 
-git clone git@github.com:wtfil/dot-files.git $DIR
 if hash apt-get 2>/dev/null; then
     sudo apt-get install screen
 fi;
@@ -17,6 +16,7 @@ if hash screen 2>/dev/null; then
    cp $DIR/.screenrc ~
 fi
 
+git clone git@github.com:wtfil/dot-files.git $DIR
 cp $DIR/.bashrc ~
 ln -sf $PROFILE ~/.profile
 ln -sf $PROFILE ~/.bash_login
