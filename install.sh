@@ -5,12 +5,17 @@ PROFILE=~/.bashrc
 git clone git@github.com:wtfil/dot-files.git $DIR
 if hash apt-get 2>/dev/null; then
     sudo apt-get install screen
-    sudo chmod +s /usr/bin/screen
-    sudo chmod 755 /var/run/screen
-    cp $DIR/.screenrc ~
-else
-    echo 'apt-get is not find; screen is not instaled';
 fi;
+if hash yum 2>/dev/null; then
+    sudo yum -y install git
+    sudo yum -y install vim
+    sudo yum -y install screen
+fi;
+if hash screen 2>/dev/null; then 
+   sudo chmod +s /usr/bin/screen
+   sudo chmod 755 /var/run/screen
+   cp $DIR/.screenrc ~
+fi
 
 cp $DIR/.bashrc ~
 ln -sf $PROFILE ~/.profile
