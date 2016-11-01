@@ -3,7 +3,7 @@ DIR=~/dot-files
 PROFILE=~/.bashrc
 
 if hash apt-get 2>/dev/null; then
-    sudo apt-get install -y screen git
+    sudo apt-get install -y screen git vim
 fi;
 if hash yum 2>/dev/null; then
     sudo yum -y install git
