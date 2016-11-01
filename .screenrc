@@ -1,48 +1,83 @@
-#multiuser on
+# the following two lines give a two-line status, with the current window highlighted
+hardstatus alwayslastline
+hardstatus string '%{= kG}[%= %{= kw}%-w%{+b yk} %n*%t%?(%u)%? %{-}%+w %=%{g}]'
+defshell -bash
+
+# huge scrollback buffer
+defscrollback 5000
+
+# no welcome message
+startup_message off
+
+# 256 colors
+attrcolor b ".I"
 termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
-
-# включаем utf8, ага
-defutf8 on 
-# настройка режим управления потоком окна.
-defflow on  
-# выключает использование или эмуляцию hardstatus-строки терминала
-# хотя можно использовать вместо caption
-hardstatus off
-# заголовок, о форматировании заголовка смотреть в мане
-caption always ' %{-b dd}%-w%{cd}%n* %t%{-}%+w %{cd}%-=(%l) %d/%m %c%{-} '
-
-# включаем визуальный звонок
-vbell on
-# сообщение для (visual bell)
-vbell_msg "vbell %n" 
-# сообщение если в фоновом окне bell character, ^G
-bell_msg "Bell %n"
-# сообщение если есть активность в наблюдаемом окне
-activity "Activity on %n" 
-# собственно включаем монитор активности, если off то включается командой ^a M
-defmonitor on
-# количество сохраненных строк
-defscrollback 10000
-# при копировании строки будут разделяться символами CR — LF  
-crlf off 
-# нахрен нам страница приветсвия
-startup_message off 
-# цвет фона при очистке, кстати имя терминала тоже меняется
-# поэтому настройку клавиатуры zsh надо проводить отдельно
 defbce on
-# по умолчанию детатчится при разрыве связи с терминалом
-# для работы по ssh самое оно
-autodetach on
-# поддержка alternate screen, типо отчистка экрана при выходе из манов и пр.
-altscreen on
-# как же мы без скринсейвера
-#idle 30 eval "screen ~/cmatrix -f -o -u 10" "idle 0"
-# вешаем ^a + на увеличение окон на 3 и ^a - на уменьшение на 1
-bind + resize +3
-bind - resize -1
-# имя файла для чтения и записи буфера обмена, по дефолту пишет
-# в /tmp/screen-exchange
-bufferfile ~/.bak/screen-exchange
 
-# дальше настройка терминала, лучше взять из своего дистрибутивного
-# дефолтного screenrc, обычно они там есть.
+# mouse tracking allows to switch region focus by clicking
+mousetrack on
+
+# default windows
+screen -t Shell1  1 bash
+select 0
+bind c screen 1 # window numbering starts at 1 not 0
+bind 0 select 10
+
+# get rid of silly xoff stuff
+bind s split
+
+# layouts
+layout autosave on
+layout new one
+select 1
+layout new two
+select 1
+split
+resize -v +8
+focus down
+select 4
+focus up
+layout new three
+select 1
+split
+resize -v +7
+focus down
+select 3
+split -v
+resize -h +10
+focus right
+select 4
+focus up
+
+layout attach one
+layout select one
+
+# navigating regions with Ctrl-arrows
+bindkey "^[[1;5D" focus left
+bindkey "^[[1;5C" focus right
+bindkey "^[[1;5A" focus up
+bindkey "^[[1;5B" focus down
+
+# switch windows with F3 (prev) and F4 (next)
+bindkey "^[OR" prev
+bindkey "^[OS" next
+
+# switch layouts with Ctrl+F3 (prev layout) and Ctrl+F4 (next)
+bindkey "^[O1;5R" layout prev
+bindkey "^[O1;5S" layout next
+
+# F2 puts Screen into resize mode. Resize regions using hjkl keys.
+bindkey "^[OQ" eval "command -c rsz" # enter resize mode
+
+# use hjkl keys to resize regions
+bind -c rsz h eval "resize -h -5" "command -c rsz"
+bind -c rsz j eval "resize -v -5" "command -c rsz"
+bind -c rsz k eval "resize -v +5" "command -c rsz"
+bind -c rsz l eval "resize -h +5" "command -c rsz"
+
+# quickly switch between regions using tab and arrows
+bind -c rsz \t    eval "focus"       "command -c rsz" # Tab
+bind -c rsz -k kl eval "focus left"  "command -c rsz" # Left
+bind -c rsz -k kr eval "focus right" "command -c rsz" # Right
+bind -c rsz -k ku eval "focus up"    "command -c rsz" # Up
+bind -c rsz -k kd eval "focus down"  "command -c rsz" # Down
