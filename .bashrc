@@ -4,32 +4,24 @@ if [ $TERM=='cigwin' ] || [[ `env | grep Apple` ]]; then
     IS_MAC=true
 fi
 
-function parse_git_branch {                                                                                                                                                                                        
+function parse_git_branch {
     local REV=`git rev-parse --abbrev-ref HEAD 2>/dev/null`
     if [[ $REV ]]; then
         echo " $REV ";
     else
         echo " ";
     fi
-}                                                                                                                                                                                                                  
-function proml {                                                                                                                                                                                                   
-    local BLUE="\[\033[0;34m\]"                                                                                                                                                                                    
-    # OPTIONAL - if you want to use any of these other colors:                                                                                                                                                     
-    local RED="\[\033[0;31m\]"                                                                                                                                                                                     
-    local LIGHT_RED="\[\033[1;31m\]"                                                                                                                                                                               
-    local GREEN="\[\033[0;32m\]"                                                                                                                                                                                   
-    local LIGHT_GREEN="\[\033[1;32m\]"                                                                                                                                                                             
-    local WHITE="\[\033[1;37m\]"                                                                                                                                                                                   
-    local LIGHT_GRAY="\[\033[0;37m\]"                                                                                                                                                                              
-    local LIGHT_BLUE="\[\033[1;36m\]"                                                                                                                                                                              
-    # END OPTIONAL                                                                                                                                                                                                 
-    local DEFAULT="\[\033[0m\]"                                                                                                                                                                                    
-    if [ $IS_MAC ]; then                                                                                                                                                                                           
+}
+function proml {
+    local LIGHT_GRAY="\[\033[0;37m\]"
+    local LIGHT_BLUE="\[\033[1;36m\]"
+    local DEFAULT="\[\033[0m\]"
+    if [ $IS_MAC ]; then
         PS1="\w$LIGHT_BLUE\$(parse_git_branch)$DEFAULT> "
-    else                                                                                                                                                                                                           
+    else
         PS1="$LIGHT_GREEN\h$DEFAULT:\w$LIGHT_BLUE\$(parse_git_branch)$DEFAULT> "
     fi
-} 
+}
 proml
 
 if [ $IS_MAC ]; then
