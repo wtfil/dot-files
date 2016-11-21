@@ -1,35 +1,3 @@
-snippet bind
-	function (${1}) {
-		${2:// body}
-	}.bind(this)${3:,}
-snippet dd
-	BEM.DOM.decl({block: '${1:blockName}'}, {
-
-		onSetMod: {
-			js: function () {
-				${3:// body}
-			}
-		}${2:,}
-
-	});
-snippet jd
-	BEM.JSON.decl('${1:blockName}', {
-
-		onBlock: function (ctx) {
-			${3:ctx.content}
-		}${2:,}
-
-	});
-snippet ()
-	(function () {
-		${1:// body}
-	}());
-snippet block
-	BEM.blocks['b-${1:blockName}']${2:;}
-snippet map
-	${1}.map(function (${2:key}) {
-		${3:// body}
-	})
 snippet forin
 	for (${2:key} in ${1:object}) {
 		if ($1.hasOwnProperty($2)) {
@@ -40,14 +8,8 @@ snippet cl
 	console.log(${1:'log'});
 snippet cll
 	console.log('${1:log}');
-snippet bb
-	BEM.blocks['i-${1:block_name}'].${2:method_name}(${3:params});
 snippet try
 	try {
 		${1:code}
-	} catch (${2:e}) {${3}};
-snippet base
-	this.__base.apply(this, arguments);
-snippet base_
-	base.apply(_this, arguments);
+	} catch (${2:e}) {${3}}
 
