@@ -1,7 +1,4 @@
-set nocompatible
 filetype off
-
-" load plugins
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -9,106 +6,86 @@ Plugin 'gmarik/Vundle.vim'
 
 Plugin 'comments.vim'
 Plugin 'snipMate'
-Plugin 'mattn/emmet-vim'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tpope/vim-sleuth'
 
-" quick search
-Plugin 'kien/ctrlp.vim'
-let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|node_modules|production|build)$'
-map <Leader>e <c-p>
+
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'jeetsukumaran/vim-buffergator'
+
+Plugin 'Lokaltog/vim-powerline'
+
+Plugin 'tpope/vim-surround'
+Plugin 'mattn/emmet-vim'
+
+Plugin 'terryma/vim-multiple-cursors'
 
 " syntax
+Plugin 'groenewege/vim-less'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'othree/yajs.vim'
 Plugin 'othree/es.next.syntax.vim'
 Plugin 'mxw/vim-jsx'
 let g:jsx_ext_required = 0
 
-" colorschemas
+" color schemas
 Plugin 'mhartington/oceanic-next'
 Plugin 'altercation/vim-colors-solarized'
 
+Plugin 'kien/ctrlp.vim'
+let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|node_modules|production|build)$'
+map <Leader>e <c-p>
+
 call vundle#end()
 
-set nowrap
+filetype plugin indent on
+set expandtab
 set autoindent
-set nofoldenable
+set foldmethod=indent
 set encoding=utf-8
+set nocompatible
 set fileencodings=utf-8,cp1251,cp866
-set backspace=indent,eol,start
-set sw=2 ts=2 sts=2
-set so=7
-set wildmenu
+set tags+=~/.tags
+set tags+=./tags
 set ruler
 set laststatus=2
-" pab completion
+set nowrap
 set wildmode=longest:full
-set wildignore+=*.o,*.obj,.git,*.rbc
-" diable beem
-set noeb vb t_vb=
+set wildmenu
+set so=7
+set backspace=indent,eol,start
+set noet ci pi sts=0 sw=4 ts=4
+set autoread
 
 " backup and swap
 set backupdir=~/.vim/tmp/backup
 set backup
 set directory=~/.vim/tmp/swap
 
-if !has("gui_running")
-	" scroll with mouse in terminal
-	set mouse=a
-	inoremap <Esc>[62~ <C-X><C-E>
-	inoremap <Esc>[63~ <C-X><C-Y>
-	nnoremap <Esc>[62~ <C-E>
-	nnoremap <Esc>[63~ <C-Y>
-else
-	" gui options
-	map  <silent>  <S-Insert>  "+p
-	imap <silent>  <S-Insert>  <Esc>"+pa
-	set guifont=Monaco:h10
-	set guioptions-=m
-	set guioptions-=f
-	set guioptions-=r
-	set guioptions-=R
-	set guioptions-=l
-	set guioptions-=L
-	set guioptions-=b
-	set guioptions-=T
-	set guioptions-=f
-	set guioptions-=e
+" hightlight
+syntax enable
+syntax on
+set background=dark
+set t_Co=256
+set term=screen-256color
+let g:solarized_termcolors=256
+let g:airline_theme='oceanicnext'
+colorscheme OceanicNext
 
-endif
-
-" hightlight cursoet noeb vb t_vb=
+hi Comment term=bold cterm=bold guibg=Grey40
 hi CursorLine   cterm=NONE ctermbg=23
 hi CursorColumn cterm=NONE ctermbg=23
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
-" w!! saves file under sudo
-cmap w!! w !sudo tee % >/dev/null
+" spelling
+autocmd BufRead,BufNewFile *.md setlocal spell
+set complete+=kspell
 
-" hightlight
-syntax enable
-if has("gui_running")
-else
-	set term=xterm
-	set t_Co=256
-	let &t_AB="\e[48;5;%dm"
-	let &t_AF="\e[38;5;%dm"
-	inoremap <Char-0x07F> <BS>
-	nnoremap <Char-0x07F> <BS>
-endif
-if (has("termguicolors"))
-	set termguicolors
-endif
-colorscheme OceanicNext
+set foldtext=CustomFoldText()
+hi Folded term=NONE cterm=NONE gui=NONE
 
-" turn off hightlight for projector
-function Pres ()
-	:colorscheme OceanicNextLight
-	:syntax off
-endfunction
-map <F6> :call Pres()<CR>
+syn sync fromstart
+syn sync maxlines=100
 
 " custom settings
 so ~/.vim/custom/maps.vim
 so ~/.vim/custom/cyrillic-maps.vim
+so ~/.vim/custom/functions.vim
