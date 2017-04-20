@@ -1,8 +1,8 @@
 function port {
-	lsof -n -i4TCP:$1 | grep LISTEN
+    lsof -n -i4TCP:$1 | grep LISTEN
 }
 function gr {
-    grep -nri --color=always $1 . 2>/dev/null | grep -vEe '.git|node_modules|production'
+    find . ! -path '*.git*' ! -path '*node_modules*' -type f | xargs grep -nri --color=always $1 2>/dev/null
 }
 
 function remote {
