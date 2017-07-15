@@ -14,7 +14,7 @@ alias ll='ls -halF'
 alias egr='egrep -snr --color=always'
 alias ss='du -sh'
 alias um="git fetch origin master:master && git merge master"
-alias usage="ls | xargs -I{}  du -hs {}"
+alias usage="ls -A | xargs -I{}  du -hs {}"
 
 function ulimit() { builtin ulimit -n 1024; }
 export -f ulimit

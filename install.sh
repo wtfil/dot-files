@@ -36,7 +36,11 @@ if [ $TERM=='cigwin' ]; then
     cp $DIR/ConEmu.xml ~/AppData/Roaming/
 fi
 
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim +PluginInstall +qall
+#git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+#vim +PluginInstall +qall
+~/.config/nvim
+ln -s ~/.vimrc ~/.config/nvim/init.vim
+curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > dein.sh
+sh dein.sh ~/.vim/bundles
 
 . ~/.bashrc

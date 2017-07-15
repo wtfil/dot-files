@@ -1,42 +1,43 @@
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+set runtimepath+=~/.vim/bundles/repos/github.com/Shougo/dein.vim
 
-Plugin 'gmarik/Vundle.vim'
+if dein#load_state('~/.vim/bundles')
+    call dein#begin('~/.vim/bundles')
 
-Plugin 'comments.vim'
-Plugin 'snipMate'
+    call dein#add('scrooloose/nerdcommenter')
+    call dein#add('vim-syntastic/syntastic')
+    call dein#add('Lokaltog/vim-powerline')
+    call dein#add('tpope/vim-sleuth')
+    call dein#add('bronson/vim-trailing-whitespace')
+    call dein#add('jeetsukumaran/vim-buffergator')
+    call dein#add('ctrlpvim/ctrlp.vim')
+    call dein#add('x1024/vim-cyrillic')
 
+    call dein#add('tpope/vim-surround')
+    call dein#add('mattn/emmet-vim')
 
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'jeetsukumaran/vim-buffergator'
+    call dein#add('terryma/vim-multiple-cursors')
 
-Plugin 'Lokaltog/vim-powerline'
+    call dein#add('groenewege/vim-less')
+    call dein#add('othree/javascript-libraries-syntax.vim')
+    call dein#add('othree/yajs.vim')
+    call dein#add('othree/es.next.syntax.vim')
+    call dein#add('mxw/vim-jsx')
+    call dein#add('leafgarland/typescript-vim')
 
-Plugin 'tpope/vim-surround'
-Plugin 'mattn/emmet-vim'
+    call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+    call dein#add('Quramy/tsuquyomi', {'lazy': 1})
 
-Plugin 'terryma/vim-multiple-cursors'
+    call dein#add('mhartington/oceanic-next')
+    call dein#add('altercation/vim-colors-solarized')
 
-" syntax
-Plugin 'groenewege/vim-less'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'othree/yajs.vim'
-Plugin 'othree/es.next.syntax.vim'
-Plugin 'mxw/vim-jsx'
-let g:jsx_ext_required = 0
-
-" color schemas
-Plugin 'mhartington/oceanic-next'
-Plugin 'altercation/vim-colors-solarized'
-
-Plugin 'kien/ctrlp.vim'
-let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|node_modules|production|build)$'
-map <Leader>e <c-p>
-
-call vundle#end()
+    call dein#end()
+    call dein#save_state()
+endif
 
 filetype plugin indent on
+syntax enable
+
 set expandtab
 set autoindent
 set foldmethod=indent
@@ -54,6 +55,10 @@ set so=7
 set backspace=indent,eol,start
 set noet ci pi sts=0 sw=4 ts=4
 set autoread
+syn sync fromstart
+syn sync maxlines=100
+let g:mapleader="\\"
+let g:netrw_banner=0
 
 " backup and swap
 set backupdir=~/.vim/tmp/backup
@@ -61,31 +66,66 @@ set backup
 set directory=~/.vim/tmp/swap
 
 " hightlight
-syntax enable
 syntax on
 set background=dark
-set t_Co=256
-set term=screen-256color
-let g:solarized_termcolors=256
+"set t_Co=256
+"set term=screen-256color
+"let g:solarized_termcolors=256
 let g:airline_theme='oceanicnext'
 colorscheme OceanicNext
-
-hi Comment term=bold cterm=bold guibg=Grey40
-hi CursorLine   cterm=NONE ctermbg=23
-hi CursorColumn cterm=NONE ctermbg=23
-nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
-
-" spelling
-autocmd BufRead,BufNewFile *.md setlocal spell
-set complete+=kspell
-
-set foldtext=CustomFoldText()
-hi Folded term=NONE cterm=NONE gui=NONE
-
-syn sync fromstart
-syn sync maxlines=100
 
 " custom settings
 so ~/.vim/custom/maps.vim
 so ~/.vim/custom/cyrillic-maps.vim
 so ~/.vim/custom/functions.vim
+
+" ------------------------------ PLUGINS SETUP -----------------------------
+
+" cursor line and column
+hi Comment term=bold cterm=bold guibg=Grey40
+hi CursorLine   cterm=NONE ctermbg=23
+hi CursorColumn cterm=NONE ctermbg=23
+nnoremap <Leader>l :set cursorline! cursorcolumn!<CR>
+
+" folding
+set foldtext=CustomFoldText()
+hi Folded term=NONE cterm=NONE gui=NONE
+
+" typescipt-vim
+let g:jsx_ext_required = 0
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" tsuquyomi
+let g:tsuquyomi_completion_detail = 1
+set completeopt=longest,menuone
+set omnifunc=tsuquyomi#complete
+inoremap . .<esc>a
+inoremap <C-n> <C-x><C-o>
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
+
+" ctrlp.vim
+let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|node_modules|production|build|dist|coverage)$'
+map <Leader>e <c-p>
+
+" emmet-vim
+let g:user_emmet_settings = {
+    \  'typescript' : {
+    \    "extends": "jsx",
+	\    "empty_element_suffix": "${cursor}/>",
+    \    "quote_char": "'"
+    \  },
+    \}
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+"let g:syntastic_typescript_checkers = ['tslint']
