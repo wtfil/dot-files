@@ -13,6 +13,8 @@ imap <c-l> <Right>
 imap <c-j> <ESC>ja
 imap <c-k> <ESC>ka
 imap <c-w> <ESC>lwi
+imap <c-e> <ESC>ea
+imap <c-g><c-e> <ESC>gea
 imap <c-b> <ESC>lbi
 imap <c-u> <ESC>uli
 imap <c-r> <ESC>$i
