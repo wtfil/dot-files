@@ -3,7 +3,7 @@ DIR=~/dot-files
 PROFILE=~/.bashrc
 
 if hash apt-get 2>/dev/null; then
-    sudo apt-get install -y screen git vim
+    sudo apt-get install -y screen git vim curl
 fi;
 if hash yum 2>/dev/null; then
     sudo yum -y install git
@@ -22,7 +22,7 @@ fi
 cp $DIR/.bashrc ~
 ln -sf $PROFILE ~/.profile
 ln -sf $PROFILE ~/.bash_login
-cp $DIR/.git-completion.bash ~
+curl "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash" > ~/.git-completion.bash 2 > /dev/null
 cp $DIR/.gitconfig ~
 cp $DIR/.bash_aliases ~
 cp $DIR/.npmrc ~
