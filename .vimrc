@@ -22,14 +22,13 @@ if dein#load_state('~/.vim/bundles')
     call dein#add('othree/javascript-libraries-syntax.vim')
     call dein#add('othree/yajs.vim')
     call dein#add('othree/es.next.syntax.vim')
+    call dein#add('othree/csscomplete.vim')
     call dein#add('mxw/vim-jsx')
     call dein#add('leafgarland/typescript-vim')
 
-    call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
     call dein#add('Quramy/tsuquyomi', {'lazy': 1})
 
-    call dein#add('mhartington/oceanic-next')
-    call dein#add('altercation/vim-colors-solarized')
+    call dein#add('flazz/vim-colorschemes')
 
     call dein#end()
     call dein#save_state()
@@ -68,11 +67,15 @@ set directory=~/.vim/tmp/swap
 " hightlight
 syntax on
 set background=dark
-"set t_Co=256
+set t_Co=256
 "set term=screen-256color
 "let g:solarized_termcolors=256
-let g:airline_theme='oceanicnext'
-colorscheme OceanicNext
+let g:airline_theme='solarized'
+try
+	colorscheme solarized
+catch
+	colorscheme desert
+endtry
 
 " custom settings
 so ~/.vim/custom/maps.vim
@@ -82,7 +85,7 @@ so ~/.vim/custom/functions.vim
 " ------------------------------ PLUGINS SETUP -----------------------------
 
 " cursor line and column
-hi Comment term=bold cterm=bold guibg=Grey40
+"hi Comment term=bold cterm=bold guibg=Grey40
 hi CursorLine   cterm=NONE ctermbg=23
 hi CursorColumn cterm=NONE ctermbg=23
 nnoremap <Leader>l :set cursorline! cursorcolumn!<CR>
@@ -100,15 +103,14 @@ autocmd QuickFixCmdPost    l* nested lwindow
 let g:tsuquyomi_completion_detail = 1
 set completeopt=longest,menuone
 set omnifunc=tsuquyomi#complete
-inoremap . .<esc>a
-inoremap <C-n> <C-x><C-o>
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <c-o><c-o> <C-x><C-o>
 
 " ctrlp.vim
 let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|node_modules|production|build|dist|coverage)$'
 map <Leader>e <c-p>
+
+" csscomplete.vim
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
 " emmet-vim
 let g:user_emmet_settings = {
@@ -120,12 +122,24 @@ let g:user_emmet_settings = {
     \}
 
 " syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+if exists("*SyntasticStatuslineFlag")
+	set statusline+=%#warningmsg#
+	set statusline+=%{SyntasticStatuslineFlag()}
+	set statusline+=%*
+	let g:syntastic_always_populate_loc_list = 1
+	let g:syntastic_auto_loc_list = 1
+	let g:syntastic_check_on_open = 1
+	let g:syntastic_check_on_wq = 0
+	"let g:syntastic_typescript_checkers = ['tslint']
+endif
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-"let g:syntastic_typescript_checkers = ['tslint']
+
+if has("gui_running")
+    set noeb vb t_vb=
+    au GUIEnter * set vb t_vb=
+    map  <silent>  <S-Insert>  "+p
+    imap <silent> <S-Insert> <ESC>"+pa
+    set guifont=consolas:h12
+    au GUIEnter * simalt ~x
+    set guioptions=
+endif
