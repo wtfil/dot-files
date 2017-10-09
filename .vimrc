@@ -29,6 +29,7 @@ if dein#load_state('~/.vim/bundles')
     call dein#add('Quramy/tsuquyomi', {'lazy': 1})
 
     call dein#add('flazz/vim-colorschemes')
+    call dein#add('altercation/vim-colors-solarized')
 
     call dein#end()
     call dein#save_state()
@@ -85,7 +86,6 @@ so ~/.vim/custom/functions.vim
 " ------------------------------ PLUGINS SETUP -----------------------------
 
 " cursor line and column
-"hi Comment term=bold cterm=bold guibg=Grey40
 hi CursorLine   cterm=NONE ctermbg=23
 hi CursorColumn cterm=NONE ctermbg=23
 nnoremap <Leader>l :set cursorline! cursorcolumn!<CR>
@@ -103,7 +103,6 @@ autocmd QuickFixCmdPost    l* nested lwindow
 let g:tsuquyomi_completion_detail = 1
 set completeopt=longest,menuone
 set omnifunc=tsuquyomi#complete
-inoremap <c-o><c-o> <C-x><C-o>
 
 " ctrlp.vim
 let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|node_modules|production|build|dist|coverage)$'
@@ -130,9 +129,7 @@ if exists("*SyntasticStatuslineFlag")
 	let g:syntastic_auto_loc_list = 1
 	let g:syntastic_check_on_open = 1
 	let g:syntastic_check_on_wq = 0
-	"let g:syntastic_typescript_checkers = ['tslint']
 endif
-
 
 if has("gui_running")
     set noeb vb t_vb=
