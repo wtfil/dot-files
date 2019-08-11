@@ -29,7 +29,7 @@ cp $DIR/.gitconfig ~
 cp $DIR/.bash_aliases ~
 cp $DIR/.npmrc ~
 cp $DIR/.vimrc ~
-cp $DIR/.vimrc $VIM
+cp $DIR/.vimrc $VIM/init.vim
 cp $DIR/.inputrc ~
 cp -r $DIR/.vim ~
 cp $DIR/.mongorc.js ~
