@@ -1,8 +1,15 @@
 filetype off
-set runtimepath+=~/.vim/bundles/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
-if dein#load_state('~/.vim/bundles')
-    call dein#begin('~/.vim/bundles')
+if dein#load_state('~/.cache/dein')
+    call dein#begin('~/.cache/dein')
+    call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
+    call dein#add('Shougo/deoplete.nvim')
+
+    if !has('nvim')
+        call dein#add('roxma/nvim-yarp')
+        call dein#add('roxma/vim-hug-neovim-rpc')
+    endif
 
     call dein#add('scrooloose/nerdcommenter')
     call dein#add('vim-syntastic/syntastic')
@@ -35,6 +42,7 @@ if dein#load_state('~/.vim/bundles')
     call dein#save_state()
 endif
 
+
 filetype plugin indent on
 syntax enable
 
@@ -60,10 +68,20 @@ syn sync maxlines=100
 let g:mapleader="\\"
 let g:netrw_banner=0
 
-" backup and swap
-set backupdir=~/.vim/tmp/backup
 set backup
-set directory=~/.vim/tmp/swap
+if has('nvim')
+    set backupdir=~/.config/nvim/tmp/backup
+    set directory=~/.config/nvim//tmp/swap
+    so ~/.config/nvim/custom/maps.vim
+    so ~/.config/nvim/custom/cyrillic-maps.vim
+    so ~/.config/nvim/custom/functions.vim
+else
+    set backupdir=~/.vim/tmp/backup
+    set directory=~/.vim//tmp/swap
+    so ~/.vim/custom/maps.vim
+    so ~/.vim/custom/cyrillic-maps.vim
+    so ~/.vim/custom/functions.vim
+endif
 
 " hightlight
 syntax on
@@ -73,15 +91,11 @@ set t_Co=256
 "let g:solarized_termcolors=256
 let g:airline_theme='solarized'
 try
-	colorscheme solarized
+    colorscheme OceanicNext
 catch
-	colorscheme desert
+    colorscheme desert
 endtry
 
-" custom settings
-so ~/.vim/custom/maps.vim
-so ~/.vim/custom/cyrillic-maps.vim
-so ~/.vim/custom/functions.vim
 
 " ------------------------------ PLUGINS SETUP -----------------------------
 
