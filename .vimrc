@@ -12,7 +12,6 @@ if dein#load_state('~/.cache/dein')
     endif
 
     call dein#add('scrooloose/nerdcommenter')
-    call dein#add('vim-syntastic/syntastic')
     call dein#add('Lokaltog/vim-powerline')
     call dein#add('tpope/vim-sleuth')
     call dein#add('bronson/vim-trailing-whitespace')
@@ -33,7 +32,14 @@ if dein#load_state('~/.cache/dein')
     call dein#add('mxw/vim-jsx')
     call dein#add('leafgarland/typescript-vim')
 
-    call dein#add('Quramy/tsuquyomi', {'lazy': 1})
+    if has('nvim')
+    	call dein#add('mhartington/nvim-typescript', {'build': './install.sh'})
+    	call dein#add('Shougo/deoplete.nvim')
+    	call dein#add('Shougo/denite.nvim')
+    else
+    	call dein#add('Quramy/tsuquyomi', {'lazy': 1})
+    endif
+
 
     call dein#add('flazz/vim-colorschemes')
     call dein#add('altercation/vim-colors-solarized')
@@ -68,14 +74,13 @@ syn sync maxlines=100
 let g:mapleader="\\"
 let g:netrw_banner=0
 
-set backup
 if has('nvim')
-    set backupdir=~/.config/nvim/tmp/backup
     set directory=~/.config/nvim//tmp/swap
     so ~/.config/nvim/custom/maps.vim
     so ~/.config/nvim/custom/cyrillic-maps.vim
     so ~/.config/nvim/custom/functions.vim
 else
+    set backup
     set backupdir=~/.vim/tmp/backup
     set directory=~/.vim//tmp/swap
     so ~/.vim/custom/maps.vim
@@ -118,6 +123,13 @@ let g:tsuquyomi_completion_detail = 1
 set completeopt=longest,menuone
 set omnifunc=tsuquyomi#complete
 
+" deoplete
+let g:deoplete#enable_at_startup = 1
+
+" vim-typescript
+let g:typescript_indent_disable = 1
+
+
 " ctrlp.vim
 let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|node_modules|production|build|dist|coverage)$'
 map <Leader>e <c-p>
@@ -126,24 +138,17 @@ map <Leader>e <c-p>
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
 " emmet-vim
-let g:user_emmet_settings = {
-    \  'typescript' : {
-    \    "extends": "jsx",
-	\    "empty_element_suffix": "${cursor}/>",
-    \    "quote_char": "'"
-    \  },
-    \}
 
 " syntastic
-if exists("*SyntasticStatuslineFlag")
-	set statusline+=%#warningmsg#
-	set statusline+=%{SyntasticStatuslineFlag()}
-	set statusline+=%*
-	let g:syntastic_always_populate_loc_list = 1
-	let g:syntastic_auto_loc_list = 1
-	let g:syntastic_check_on_open = 1
-	let g:syntastic_check_on_wq = 0
-endif
+"if exists("*SyntasticStatuslineFlag")
+    "set statusline+=%#warningmsg#
+    "set statusline+=%{SyntasticStatuslineFlag()}
+    "set statusline+=%*
+    "let g:syntastic_always_populate_loc_list = 1
+    "let g:syntastic_auto_loc_list = 1
+    "let g:syntastic_check_on_open = 1
+    "let g:syntastic_check_on_wq = 0
+"endif
 
 if has("gui_running")
     set noeb vb t_vb=
