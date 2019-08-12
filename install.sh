@@ -6,7 +6,7 @@ NVIM=~/.config/nvim
 if hash apt-get 2>/dev/null; then
     sudo add-apt-repository ppa:neovim-ppa/unstable
     sudo apt-get update -y
-    sudo apt-get install -y python3 python3-pip vim neovim curl node
+    sudo apt-get install -y python3 python3-pip vim neovim curl nodejs
 fi;
 if hash yum 2>/dev/null; then
     sudo yum -y install git
@@ -31,13 +31,13 @@ cp $DIR/.bashrc ~
 ln -sf $PROFILE ~/.profile
 ln -sf $PROFILE ~/.bash_login
 curl "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash" > ~/.git-completion.bash 2 > /dev/null
-mkdir $NVIM
+mkdir -p $NVIM
 cp $DIR/.gitconfig ~
 cp $DIR/.bash_aliases ~
 cp $DIR/.npmrc ~
 cp $DIR/.vimrc ~
 cp -r $DIR/.vim ~
-cp -r $DIR/.vim $NVIM
+cp -r $DIR/.vim/* $NVIM
 cp $DIR/.inputrc ~
 cp $DIR/.mongorc.js ~
 
@@ -49,6 +49,6 @@ fi
 
 ln -s ~/.vimrc $NVIM/init.vim
 curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > dein.sh
-sh ./installer.sh ~/.cache/dein
+sh ./dein.sh ~/.cache/dein
 
 . ~/.bashrc
