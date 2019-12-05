@@ -6,7 +6,7 @@ NVIM=~/.config/nvim
 if hash apt-get 2>/dev/null; then
     sudo add-apt-repository ppa:neovim-ppa/unstable
     sudo apt-get update -y
-    sudo apt-get install -y python3 python3-pip vim neovim curl nodejs
+    sudo apt-get install -y python3 python3-pip vim neovim curl nodejs ack-grep  
 fi;
 if hash yum 2>/dev/null; then
     sudo yum -y install git
