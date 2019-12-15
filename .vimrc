@@ -6,23 +6,12 @@ if dein#load_state('~/.cache/dein')
     call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
     call dein#add('Shougo/deoplete.nvim')
 
-    if !has('nvim')
-        call dein#add('roxma/nvim-yarp')
-        call dein#add('roxma/vim-hug-neovim-rpc')
-    endif
-
     call dein#add('scrooloose/nerdcommenter')
     call dein#add('Lokaltog/vim-powerline')
     call dein#add('tpope/vim-sleuth')
     call dein#add('bronson/vim-trailing-whitespace')
     call dein#add('jeetsukumaran/vim-buffergator')
     call dein#add('ctrlpvim/ctrlp.vim')
-    call dein#add('x1024/vim-cyrillic')
-
-    call dein#add('tpope/vim-surround')
-    call dein#add('mattn/emmet-vim')
-
-    call dein#add('terryma/vim-multiple-cursors')
 
     call dein#add('groenewege/vim-less')
     call dein#add('othree/javascript-libraries-syntax.vim')
@@ -30,13 +19,17 @@ if dein#load_state('~/.cache/dein')
     call dein#add('othree/es.next.syntax.vim')
     call dein#add('othree/csscomplete.vim')
     call dein#add('mxw/vim-jsx')
-    call dein#add('leafgarland/typescript-vim')
+    call dein#add('HerringtonDarkholme/yats.vim')
+
+    "call dein#add('neoclide/coc.nvim', {'merged':0, 'rev': 'release'})
 
     if has('nvim')
-    	call dein#add('mhartington/nvim-typescript', {'build': './install.sh'})
-    	call dein#add('Shougo/deoplete.nvim')
-    	call dein#add('Shougo/denite.nvim')
+        call dein#add('mhartington/nvim-typescript', {'build': './install.sh'})
+        call dein#add('Shougo/deoplete.nvim')
+        call dein#add('Shougo/denite.nvim')
     else
+        call dein#add('roxma/nvim-yarp')
+        call dein#add('roxma/vim-hug-neovim-rpc')
     	call dein#add('Quramy/tsuquyomi', {'lazy': 1})
     endif
 
@@ -75,7 +68,7 @@ let g:mapleader="\\"
 let g:netrw_banner=0
 
 if has('nvim')
-    set directory=~/.config/nvim//tmp/swap
+    set directory=~/.config/nvim/tmp/swap
     so ~/.config/nvim/custom/maps.vim
     so ~/.config/nvim/custom/cyrillic-maps.vim
     so ~/.config/nvim/custom/functions.vim
@@ -92,8 +85,6 @@ endif
 syntax on
 set background=dark
 set t_Co=256
-"set term=screen-256color
-"let g:solarized_termcolors=256
 let g:airline_theme='solarized'
 try
     colorscheme OceanicNext
@@ -101,6 +92,25 @@ catch
     colorscheme desert
 endtry
 
+if has("gui_running")
+    set noeb vb t_vb=
+    au GUIEnter * set vb t_vb=
+    map  <silent>  <S-Insert>  "+p
+    imap <silent> <S-Insert> <ESC>"+pa
+    set guifont=consolas:h12
+    au GUIEnter * simalt ~x
+    set guioptions=
+endif
+
+" completion
+set completeopt=menu,noinsert
+inoremap <expr> <c-j> pumvisible() ? "\<C-N>" : "j"
+inoremap <expr> <c-k> pumvisible() ? "\<C-P>" : "k"
+
+augroup SyntaxSettings
+    autocmd!
+    autocmd BufNewFile,BufRead *.tsx set filetype=typescript
+augroup END
 
 " ------------------------------ PLUGINS SETUP -----------------------------
 
@@ -120,7 +130,7 @@ autocmd QuickFixCmdPost    l* nested lwindow
 
 " tsuquyomi
 let g:tsuquyomi_completion_detail = 1
-set completeopt=longest,menuone
+"set completeopt=longest,menuone
 set omnifunc=tsuquyomi#complete
 
 " deoplete
@@ -137,25 +147,11 @@ map <Leader>e <c-p>
 " csscomplete.vim
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
-" emmet-vim
+" nerdcommenter
+let g:NERDCreateDefaultMappings = 0
+let g:NERDCompactSexyComs = 0
+map <Leader>cc <plug>NERDCommenterToggle
 
-" syntastic
-"if exists("*SyntasticStatuslineFlag")
-    "set statusline+=%#warningmsg#
-    "set statusline+=%{SyntasticStatuslineFlag()}
-    "set statusline+=%*
-    "let g:syntastic_always_populate_loc_list = 1
-    "let g:syntastic_auto_loc_list = 1
-    "let g:syntastic_check_on_open = 1
-    "let g:syntastic_check_on_wq = 0
-"endif
-
-if has("gui_running")
-    set noeb vb t_vb=
-    au GUIEnter * set vb t_vb=
-    map  <silent>  <S-Insert>  "+p
-    imap <silent> <S-Insert> <ESC>"+pa
-    set guifont=consolas:h12
-    au GUIEnter * simalt ~x
-    set guioptions=
-endif
+" nvim-typescript
+noremap <Leader>d :TSDefPreview<CR>
+noremap <Leader>f :TSGetDiagnostics<CR>
