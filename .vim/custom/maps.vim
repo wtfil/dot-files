@@ -1,8 +1,6 @@
 map <F5> :so ~/.vimrc<cr>
 map <space> i<space><esc>l
 map <c-h> hdl
-map <c-o> i<CR><ESC>k$l
-imap <c-o> <ESC>o
 imap <c-v> <ESC>lv
 imap <c-u> <ESC>
 imap <c-c> <ESC>lc
